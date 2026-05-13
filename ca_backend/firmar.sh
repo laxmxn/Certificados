@@ -1,10 +1,14 @@
 #!/bin/bash
-# Este script recibe la ruta temporal del .csr y la ruta absoluta donde guardar el .crt
-
 CSR_FILE=$1
-OUTPUT_CRT=$2
+TEMP_CRT="/tmp/cert_${RANDOM}.crt"
+# Generamos un número de serie único basado en el reloj del servidor
+SERIAL_NUM=$(date +%s) 
 
-# La CA firma el certificado usando las rutas proporcionadas
-openssl x509 -req -in "$CSR_FILE" -CA ca.crt -CAkey ca.key -CAcreateserial -out "$OUTPUT_CRT" -days 365 -sha256 -passin pass:Luis28052005
+# Firmamos usando el serial dinámico. Asegúrate de poner tu nueva contraseña
+openssl x509 -req -in "$CSR_FILE" -CA ca.crt -CAkey ca.key -set_serial $SERIAL_NUM -out "$TEMP_CRT" -days 365 -sha256 -passin pass:anahuac123
 
-echo "Firma intentada para: $OUTPUT_CRT"
+# Si el archivo se creó con éxito, lo imprimimos
+if [ -f "$TEMP_CRT" ]; then
+    cat "$TEMP_CRT"
+    rm -f "$TEMP_CRT"
+fi
