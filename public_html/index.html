@@ -9,8 +9,9 @@
         body { background-color: #f4f7f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .hero-section { background: linear-gradient(135deg, #003366 0%, #004080 100%); color: white; padding: 60px 0; border-radius: 0 0 50px 50px; }
         .card { border: none; border-radius: 15px; transition: all 0.3s ease; }
-        .card:hover { transform: translateY(-10px); shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .btn-custom { border-radius: 25px; padding: 10px 25px; font-weight: 600; }
+        .icon-container { height: 80px; display: flex; justify-content: center; align-items: center; }
     </style>
 </head>
 <body>
@@ -23,11 +24,29 @@
     </header>
 
     <main class="container">
-        <div class="row justify-content-center g-4">
-            <div class="col-md-5">
+        <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+            
+            
+            <div class="col">
+                <div class="card h-100 shadow-sm border-warning">
+                    <div class="card-body text-center p-4 p-md-5">
+                        <div class="mb-4 text-warning icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                                <path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="fw-bold mb-3">Verificación de Identidad</h3>
+                        <p class="text-muted mb-4">Valida tu credencial usando tu <b>cámara web</b> y solicita la creación de tu certificado .p12.</p>
+                        <a href="g_index.php" class="btn btn-warning btn-custom w-100 mt-auto text-dark">Iniciar Verificación</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <div class="card-body text-center p-5">
-                        <div class="mb-4">
+                    <div class="card-body text-center p-4 p-md-5">
+                        <div class="mb-4 icon-container">
                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#003366" class="bi bi-file-earmark-lock" viewBox="0 0 16 16">
                                 <path d="M10 7v1.076c.54.166 1 .597 1 1.224v2.4c0 .816-.781 1.3-1.5 1.3h-3c-.719 0-1.5-.484-1.5-1.3V9.3c0-.627.46-1.058 1-1.224V7a2 2 0 1 1 4 0zM7 7h2a1 1 0 0 0-2 0zM6 9.3v2.4c0 .042.02.107.143.19.123.082.345.11.557.11h3c.212 0 .434-.028.557-.11.123-.083.143-.148.143-.19V9.3c0-.042-.02-.107-.143-.19-.123-.082-.345-.11-.557-.11h-3c-.212 0-.434.028-.557.11-.123.083-.143.148-.143.19z"/>
                                 <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
@@ -35,30 +54,48 @@
                         </div>
                         <h3 class="fw-bold mb-3">Registro Manual (CSR)</h3>
                         <p class="text-muted mb-4">Para usuarios que ya poseen una clave privada y desean firmar su solicitud <b>.csr</b> personalizada.</p>
-                        <a href="index.php" class="btn btn-outline-primary btn-custom w-100">Subir Solicitud</a>
+                        <a href="index.php" class="btn btn-outline-primary btn-custom w-100 mt-auto">Subir Solicitud</a>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col">
                 <div class="card h-100 shadow-sm border-primary">
-                    <div class="card-body text-center p-5">
-                        <div class="mb-4 text-primary">
+                    <div class="card-body text-center p-4 p-md-5">
+                        <div class="mb-4 text-primary icon-container">
                             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-shield-check" viewBox="0 0 16 16">
                                 <path d="M8 .5c-.685 0-1.391.252-1.967.752l-.452.396-.453-.396C4.557.752 3.851.5 3.166.5c-.647 0-1.116.193-1.437.44-.313.242-.471.551-.529.855-.078.406-.046.883.136 1.402.181.517.476 1.077.818 1.624.68 1.09 1.547 2.103 2.33 2.923.392.41.76.777 1.06 1.07.15.147.283.275.39.38l.09.088.027.026.01.01.002.002.001.001.201.201.201-.201.001-.001.002-.002.01-.01.027-.026.09-.088c.107-.105.24-.233.39-.38.3-.293.668-.66 1.06-1.07.783-.82 1.65-1.833 2.33-2.923.342-.547.637-1.107.818-1.624.182-.519.214-.996.136-1.402-.058-.304-.216-.613-.529-.855-.32-.247-.79-.44-1.437-.44-.685 0-1.391.252-1.967.752l-.452.396-.453-.396C11.443.752 10.737.5 10.051.5c-.647 0-1.116.193-1.437.44-.313.242-.471.551-.529.855-.078.406-.046.883.136 1.402.181.517.476 1.077.818 1.624.68 1.09 1.547 2.103 2.33 2.923.392.41.76.777 1.06 1.07.15.147.283.275.39.38l.09.088.027.026.01.01.002.002.001.001.201.201.201-.201.001-.001.002-.002.01-.01.027-.026.09-.088c.107-.105.24-.233.39-.38.3-.293.668-.66 1.06-1.07.783-.82 1.65-1.833 2.33-2.923.342-.547.637-1.107.818-1.624.182-.519.214-.996.136-1.402-.058-.304-.216-.613-.529-.855-.32-.247-.79-.44-1.437-.44z"/>
                             </svg>
                         </div>
                         <h3 class="fw-bold mb-3">Auto-Enrollment</h3>
-                        <p class="text-muted mb-4">Genera tu certificado final<b>.p12</b> listo para usar.</p>
-                        <a href="auto.php" class="btn btn-primary btn-custom w-100">Auto-Registro</a>
+                        <p class="text-muted mb-4">Genera tu certificado final <b>.p12</b> listo para usar de forma automatizada.</p>
+                        <a href="auto.php" class="btn btn-primary btn-custom w-100 mt-auto">Auto-Registro</a>
                     </div>
                 </div>
             </div>
+
+            <div class="col">
+                <div class="card h-100 shadow-sm border-success">
+                    <div class="card-body text-center p-4 p-md-5">
+                        <div class="mb-4 text-success icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                                <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                            </svg>
+                        </div>
+                        <h3 class="fw-bold mb-3">Tutorial Thunderbird</h3>
+                        <p class="text-muted mb-4">Guía paso a paso para configurar tu cliente de correo, descargar la <b>CA Raíz</b> e importar tus llaves.</p>
+                        <a href="Tutorial.php" class="btn btn-success btn-custom w-100 mt-auto">Ver Tutorial</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
     <footer class="container text-center mt-5 mb-4 py-4 border-top">
-        <p class="text-muted mb-0">Matematicas Discretas</p>
+        <p class="text-muted mb-0">Matemáticas Discretas</p>
         <p class="small text-muted text-uppercase">Criptografía y Seguridad de la Información</p>
     </footer>
 
