@@ -22,7 +22,10 @@
             <form id="generacionForm">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label fw-bold">Correo Electrónico Institucional</label>
+                        <label for="fullName" class="form-label fw-bold">Nombre Completo</label>
+                        <input type="text" class="form-control" id="fullName" placeholder="Ej. Luis Fernando Gómez Ibarra" required>
+
+                        <label for="email" class="form-label fw-bold mt-3">Correo Electrónico Institucional</label>
                         <input type="email" class="form-control" id="email" placeholder="usuario@anahuac.mx" required>
                         
                         <label for="id_document" class="form-label fw-bold mt-3">Sube tu Credencial Universitaria (PDF/Imagen)</label>
@@ -52,10 +55,17 @@
 
             <div id="downloadArea" class="mt-4 d-none p-4 bg-light border rounded">
                 <h4 class="text-success text-center mb-3">¡Archivos Generados con Éxito!</h4>
-                <p class="text-center">Por favor, descarga ambos archivos. <strong>Tu llave privada no se puede recuperar si la pierdes.</strong></p>
+                
+                <div class="alert alert-danger border-danger">
+                    <h5 class="alert-heading fw-bold">ADVERTENCIA CRÍTICA DE SEGURIDAD</h5>
+                    <p class="mb-0"><strong>NUNCA compartas tu Llave Privada (.key) con nadie</strong>, ni siquiera con los administradores del sistema, profesores o personal de soporte. Si alguien obtiene este archivo, podrá suplantar tu identidad digital para firmar y descifrar correos a tu nombre.</p>
+                </div>
+
+                <p class="text-center">Por favor, descarga ambos archivos y guarda tu Llave Privada en un lugar seguro.</p>
+                
                 <div class="d-flex justify-content-center gap-3">
-                    <button id="btnDescargarKey" class="btn btn-danger fw-bold">1. Descargar Llave Privada (.key)</button>
-                    <button id="btnDescargarCsr" class="btn btn-primary fw-bold">2. Descargar Solicitud (.csr)</button>
+                    <button id="btnDescargarKey" class="btn btn-danger fw-bold">1. Descargar Mi Llave Privada (.key)</button>
+                    <button id="btnDescargarCsr" class="btn btn-primary fw-bold">2. Descargar Mi Solicitud (.csr)</button>
                 </div>
             </div>
 
@@ -93,11 +103,13 @@
 
     // Proceso de Generación
     document.getElementById('generateBtn').addEventListener('click', () => {
-        const email = document.getElementById('email').value;
+        const fullName = document.getElementById('fullName').value.trim();
+        const email = document.getElementById('email').value.trim();
         const idDocument = document.getElementById('id_document').files.length;
 
-        if (!email || idDocument === 0 || !fotoCapturada) {
-            alert("Completa todos los campos, sube tu credencial y toma la foto de verificación.");
+        // Validación actualizada para requerir el nombre
+        if (!fullName || !email || idDocument === 0 || !fotoCapturada) {
+            alert("Completa todos los campos (Nombre y Correo), sube tu credencial y toma la foto de verificación.");
             return;
         }
 
@@ -105,12 +117,14 @@
         document.getElementById('generateBtn').classList.add('d-none');
         document.getElementById('loadingDiv').classList.remove('d-none');
 
-        // setTimeout para permitir que el DOM se actualice y muestre el spinner antes de bloquear el hilo con la criptografía
+        // setTimeout para permitir que el DOM se actualice y muestre el spinner
         setTimeout(() => {
             // Generar par de claves RSA
             forge.pki.rsa.generateKeyPair({bits: 2048, workers: -1}, function(err, keypair) {
                 if (err) {
                     alert("Error al generar las llaves.");
+                    document.getElementById('generateBtn').classList.remove('d-none');
+                    document.getElementById('loadingDiv').classList.add('d-none');
                     return;
                 }
 
@@ -118,12 +132,12 @@
                 const csr = forge.pki.createCertificationRequest();
                 csr.publicKey = keypair.publicKey;
                 
-                // Configurar los atributos del CSR
+                // Configurar los atributos del CSR (AQUÍ SE INYECTA EL NOMBRE)
                 csr.setSubject([
                     { name: 'countryName', value: 'MX' },
-                    { name: 'organizationName', value: 'Universidad Experimental' },
-                    { name: 'commonName', value: email },
-                    { name: 'emailAddress', value: email }
+                    { name: 'organizationName', value: 'Universidad Anahuac' },
+                    { name: 'commonName', value: fullName }, // <-- El nombre de la persona va aquí
+                    { name: 'emailAddress', value: email }   // <-- El correo va aquí
                 ]);
 
                 // Firmar el CSR con la nueva llave privada
@@ -155,13 +169,14 @@
 
     // Eventos de descarga
     document.getElementById('btnDescargarKey').addEventListener('click', () => {
-        const email = document.getElementById('email').value.split('@')[0];
-        descargarArchivo(pemPrivateKey, `${email}_privada.key`);
+        // Limpiamos el nombre para usarlo en el nombre del archivo (cambia espacios por guiones bajos)
+        const safeName = document.getElementById('fullName').value.trim().replace(/\s+/g, '_');
+        descargarArchivo(pemPrivateKey, `${safeName}_privada.key`);
     });
 
     document.getElementById('btnDescargarCsr').addEventListener('click', () => {
-        const email = document.getElementById('email').value.split('@')[0];
-        descargarArchivo(pemCsr, `${email}_solicitud.csr`);
+        const safeName = document.getElementById('fullName').value.trim().replace(/\s+/g, '_');
+        descargarArchivo(pemCsr, `${safeName}_solicitud.csr`);
     });
 </script>
 </body>
